@@ -9,7 +9,6 @@
     :root{ --navy:#0b2447; --accent:#d2a01d; --bg:#f5f8ff; --card:#fff; }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--navy)}
-
     header{background:linear-gradient(90deg,var(--navy),#083157);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:12px}
     .logo{width:72px;height:72px;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
@@ -17,35 +16,29 @@
     .title{line-height:1}
     .title h1{margin:0;font-size:18px;font-weight:800}
     .title p{margin:0;font-size:12px;opacity:.95}
-
     .meta{margin-left:auto;display:flex;align-items:center;gap:14px}
     .meta .event{display:flex;flex-direction:column;text-align:right}
     .meta .event small{font-size:12px;opacity:.9}
     .clock{background:rgba(255,255,255,.06);padding:8px 10px;border-radius:8px;font-weight:700;font-size:13px}
-
     .countdown-banner{width:100%;background:linear-gradient(90deg,var(--accent),#b88712);color:#08142b;padding:10px 18px;text-align:center;font-weight:700}
-
     nav{width:100%;background:transparent;display:flex;justify-content:center;padding:8px 10px;gap:12px;flex-wrap:wrap}
     nav a{color:#fff;text-decoration:none;font-weight:700;padding:8px 12px;border-radius:8px}
     nav a:hover{background:rgba(255,255,255,.06)}
 
-    .hero{max-width:1100px;margin:18px auto;padding:0 18px}
-    .slider{position:relative;overflow:hidden;border-radius:10px}
-    .slides{display:flex;width:400%;animation:slide 40s infinite}
-    .slides img{width:100%;height:320px;object-fit:cover}
-    @keyframes slide{0%{transform:translateX(0)}25%{transform:translateX(-100%)}50%{transform:translateX(-200%)}75%{transform:translateX(-300%)}100%{transform:translateX(0)}}
+    /* --- Swiper Slider Styling --- */
+    .swiper{width:100%;max-width:1100px;height:320px;margin:20px auto;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(10,30,60,.08)}
+    .swiper-slide img{width:100%;height:100%;object-fit:cover}
+    .swiper-pagination-bullet{background:var(--accent)!important}
+    .swiper-button-next, .swiper-button-prev{color:var(--accent)!important}
 
     section{max-width:1100px;margin:18px auto;padding:0 18px}
     .card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 8px 30px rgba(10,30,60,.06);margin-bottom:18px}
-
     .sponsors{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
     .sponsor{background:#fff;padding:10px 14px;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.06);font-weight:700}
-
+    .sponsor-category{margin-top:10px;margin-bottom:6px;font-weight:800;text-align:center;color:var(--accent)}
     .location-card{display:flex;flex-direction:column;align-items:center;text-align:center}
     .location-card img{width:200px;height:200px;object-fit:contain;border-radius:10px;margin-top:12px}
-
     footer{text-align:center;padding:18px;color:#123;background:#0b2447;margin-top:12px;color:#fff}
-
     .translate-btn{background:var(--accent);color:#fff;border:none;padding:8px 12px;border-radius:6px;font-weight:600;cursor:pointer}
 
     @media(max-width:760px){
@@ -53,36 +46,30 @@
       .title h1{font-size:16px}
       .meta{width:100%;justify-content:space-between}
       .meta .event{text-align:left}
-      .slides img{height:220px}
+      .swiper{height:220px}
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
   <header>
     <div class="brand">
-      <div class="logo">
-        <img src="images/logo.png" alt="AP KINGS Logo" />
-      </div>
+      <div class="logo"><img src="images/logo.png" alt="AP KINGS Logo" /></div>
       <div class="title">
         <h1>AP KINGS Volleyball</h1>
         <p>Appirampattu — Community Tournament</p>
       </div>
     </div>
-
     <div class="meta">
-      <div class="event">
-        <small>Event Date</small>
-        <div><strong>18 Oct 2025 · 08:00 AM</strong></div>
-      </div>
-
+      <div class="event"><small>Event Date</small><div><strong>18–19 Oct 2025</strong></div></div>
       <div class="clock" id="liveTime">Loading time…</div>
     </div>
-
     <div style="width:100%"></div>
     <nav>
       <a href="#about">About</a>
       <a href="#rules">Rules</a>
       <a href="#prizes">Prizes</a>
+      <a href="#schedule">Schedule</a>
       <a href="#sponsors">Sponsors</a>
       <a href="#location">Location</a>
       <a href="#register">Register</a>
@@ -93,33 +80,32 @@
 
   <div class="countdown-banner" id="countdownBanner">Countdown: <span id="countdown">Calculating...</span></div>
 
-  <div class="hero">
-    <div class="slider card">
-      <div class="slides">
-        <img src="images/slide1.jpeg" alt="Slide 1">
-        <img src="images/slide2.jpeg" alt="Slide 2">
-        <img src="images/slide3.jpeg" alt="Slide 3">
-        <img src="images/slide4.jpeg" alt="Slide 4">
-      </div>
+  <!-- Swiper Slider -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="images/slide1.jpeg" alt="Slide 1"></div>
+      <div class="swiper-slide"><img src="images/slide2.jpeg" alt="Slide 2"></div>
+      <div class="swiper-slide"><img src="images/slide3.jpeg" alt="Slide 3"></div>
+      <div class="swiper-slide"><img src="images/slide4.jpeg" alt="Slide 4"></div>
     </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev" aria-label="Previous slide"></div>
+    <div class="swiper-button-next" aria-label="Next slide"></div>
   </div>
 
   <section id="about">
     <div class="card">
       <h2>About the Tournament</h2>
-      <p id="aboutText">AP Kings Volleyball Tournament — Men's Category. Join for a weekend of competitive matches, community fun, and prizes.</p>
+      <p id="aboutText">AP Kings Volleyball Tournament — Men’s Category. Join for a weekend of competitive matches, community fun, and great prizes.</p>
     </div>
   </section>
 
-  <section id="rules">
+  <section id="schedule">
     <div class="card">
-      <h2>Rules & Guidelines</h2>
-      <ul id="rulesList">
-        <li>Maximum 8 players per team 6 on-court.</li>
-        <li>Best-of-3 sets; local standard volleyball rules apply.</li>
-        <li>Teams must check-in 30 minutes before scheduled match.</li>
-        <li>Referee decisions are final.</li>
-        <li>Unsportsmanlike behavior may lead to disqualification.</li>
+      <h2>Event Schedule</h2>
+      <ul id="scheduleList">
+        <li>📅 18.10.2025 (Saturday): Only league matches for teams arriving early.</li>
+        <li>📅 19.10.2025 (Sunday): Main tournament and prize distribution.</li>
       </ul>
     </div>
   </section>
@@ -128,10 +114,28 @@
     <div class="card">
       <h2>Prize Details</h2>
       <ul id="prizeList">
-        <li>🏆 1st Prize — ₹10,000 + Trophy</li>
-        <li>🥈 2nd Prize — ₹7,000 + Trophy</li>
-        <li>🥉 3rd Prize — ₹5,000 + Trophy</li>
-        <li>Entry Fee — ₹500 per Team</li>
+        <li>🏆 1st Prize — ₹15,000 + Trophy</li>
+        <li>🥈 2nd Prize — ₹10,000 + Trophy</li>
+        <li>🥉 3rd Prize — ₹7,000 + Trophy</li>
+        <li>🎖️ 4th Prize — ₹5,000</li>
+        <li>🏅 5th Prize — ₹3,000</li>
+        <li>💰 Entry Fee — ₹500 per Team</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="card">
+      <h2>Rules & Guidelines</h2>
+      <ul id="rulesList">
+        <li>The referee\'s decision is final.</li>
+        <li>A player who plays for one team cannot play for another team.</li>
+        <li>The organizing committee reserves the right to modify the match schedule..</li>
+        <li>Only the first rounds will be conducted on a “Best of 3” basis.</li>
+        <li>Players under the influence of alcohol are not allowed to enter the ground.</li>
+        <li>The tournament will be conducted during both day and night.</li>
+        <li>Players are allowed to play only after verifying aadhar ID cards.</li>
+        <li>Teams or players found using drugs or banned substances will be disqualified.</li>
       </ul>
     </div>
   </section>
@@ -139,13 +143,30 @@
   <section id="sponsors">
     <div class="card">
       <h2>Our Sponsors</h2>
+      <div class="sponsor-category">🏆 Prize money Sponsors</div>
       <div class="sponsors">
         <div class="sponsor">Vijaya Basker</div>
         <div class="sponsor">Kaliya</div>
         <div class="sponsor">Saravanan</div>
-        <div class="sponsor">Sathish</div>
-        <div class="sponsor">Ball Sponsors (Ranjith, Rajadurai, Magesh)</div>
-        <div class="sponsor">Food Sponsors (Ranjith, Kaliraj, Iyyanar)</div>
+      </div>
+
+      <div class="sponsor-category">🏐 Ball Sponsors</div>
+      <div class="sponsors">
+        <div class="sponsor">Ranjith</div>
+        <div class="sponsor">Rajadurai</div>
+        <div class="sponsor">Magesh</div>
+      </div>
+
+      <div class="sponsor-category">🍱 Food Sponsors</div>
+      <div class="sponsors">
+        <div class="sponsor">Ranjith</div>
+        <div class="sponsor">Kaliraj</div>
+        <div class="sponsor">Iyyanar</div>
+      </div>
+
+      <div class="sponsor-category">🙌 Support Sponsors</div>
+      <div class="sponsors">
+        <div class="sponsor">Appirampattu Peoples</div>
         <div class="sponsor">Appirampattu Players</div>
       </div>
     </div>
@@ -171,57 +192,85 @@
   <section id="contact">
     <div class="card">
       <h2>Contact</h2>
-      <p>Call: 9751170805 · Ilavarasan: 7305821206 · Vignesh: 6383157964</p>
+      <p>Call: 9751170805 (Suresh) · Ilavarasan: 7305821206 · Vignesh: 6383157964</p>
       <p>Email: <a href="mailto:udayamoorthy1857602@gmail.com">udayamoorthy1857602@gmail.com</a></p>
     </div>
   </section>
 
-  <footer>
-    <div>© 2025 AP KINGS Volleyball — Appirampattu</div>
-  </footer>
+  <footer><div>© 2025 AP KINGS Volleyball — Appirampattu</div></footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
+    // initialize swiper (autoplay + loop + navigation + pagination)
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      autoplay: { delay: 3500, disableOnInteraction: false },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    });
+
+    // Live time
     function updateLiveTime(){
       const el = document.getElementById('liveTime');
       const now = new Date();
-      const opts = { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      el.textContent = now.toLocaleString('en-US', opts);
+      el.textContent = now.toLocaleString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'short',year:'numeric'});
     }
-    setInterval(updateLiveTime, 1000);
-    updateLiveTime();
+    setInterval(updateLiveTime,1000); updateLiveTime();
 
+    // Countdown
     const eventDate = new Date('2025-10-18T08:00:00');
     function updateCountdown(){
       const now = new Date();
       let diff = eventDate - now;
-      const cdEl = document.getElementById('countdown');
-      if(diff <= 0){ cdEl.textContent = 'Event is live or has started!'; return; }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      diff -= days * (1000 * 60 * 60 * 24);
-      const hours = Math.floor(diff / (1000 * 60 * 60));
-      diff -= hours * (1000 * 60 * 60);
-      const minutes = Math.floor(diff / (1000 * 60));
-      diff -= minutes * (1000 * 60);
-      const seconds = Math.floor(diff / 1000);
-      cdEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      const cd = document.getElementById('countdown');
+      if(!cd) return;
+      if(diff <= 0){ cd.textContent = 'Event is live!'; return; }
+      const d = Math.floor(diff / (1000*60*60*24));
+      const h = Math.floor((diff / (1000*60*60)) % 24);
+      const m = Math.floor((diff / (1000*60)) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      cd.textContent = `${d}d ${h}h ${m}m ${s}s`;
     }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    setInterval(updateCountdown,1000); updateCountdown();
 
+    // Language toggle
     let tamil = false;
     function toggleLanguage(){
       tamil = !tamil;
+
+      // About
       document.getElementById('aboutText').textContent = tamil
-        ? 'AP கிங்ஸ் வாலிபால் போட்டி — ஆண்கள் பிரிவு. போட்டி, மகிழ்ச்சி மற்றும் பரிசுகளுடன் ஒரு வார இறுதி.'
-        : 'AP Kings Volleyball Tournament — Men\'s Category. Join for a weekend of competitive matches, community fun, and prizes.';
+        ? 'AP கிங்ஸ் வாலிபால் போட்டி — ஆண்கள் பிரிவு. மகிழ்ச்சியும் பரிசுகளும் நிறைந்த ஒரு வார இறுதி.'
+        : 'AP Kings Volleyball Tournament — Men\'s Category. Join for a weekend of competitive matches, community fun, and great prizes.';
 
-      document.getElementById('rulesList').innerHTML = tamil
-        ? '<li>அணிக்கு அதிகபட்சம் 8 வீரர்கள் (6 பேர் மைதானத்தில்)</li><li>3 செட் அடிப்படையில் — உள்ளூர் வாலிபால் விதிகள் பொருந்தும்</li><li>அணி போட்டிக்கு முன் 30 நிமிடத்திற்கு முன் பதிவு செய்ய வேண்டும்</li><li>நியாயாதிபதியின் முடிவு இறுதி</li><li>ஒழுங்கின்மை நடந்தால் தகுதி நீக்கம்</li>'
-        : '<li>Maximum 8 players per team 6 on-court.</li><li>Best-of-3 sets; local standard volleyball rules apply.</li><li>Teams must check-in 30 minutes before scheduled match.</li><li>Referee decisions are final.</li><li>Unsportsmanlike behavior may lead to disqualification.</li>';
+      // Schedule
+      document.getElementById('scheduleList').innerHTML = tamil
+        ? '<li>📅 18.10.2025 (சனிக்கிழமை ): முன்னதாக வரும் அணிகளுக்கான லீக் போட்டிகள்.</li><li>📅 19.10.2025 (ஞாயிற்றுக்கிழமை): முக்கிய போட்டிகள் மற்றும் பரிசளிப்பு நிகழ்ச்சி.</li>'
+        : '<li>📅 18.10.2025 (Saturday ): Only league matches for teams arriving early.</li><li>📅 19.10.2025 (Sunday): Main tournament and prize distributions.</li>';
 
+      // Prizes
       document.getElementById('prizeList').innerHTML = tamil
-        ? '<li>🏆 முதல் பரிசு — ₹10,000 + கோப்பை</li><li>🥈 இரண்டாம் பரிசு — ₹7,000 + கோப்பை</li><li>🥉 மூன்றாம் பரிசு — ₹5,000 + கோப்பை</li><li>நுழைவு கட்டணம் — அணிக்கு ₹500</li>'
-        : '<li>🏆 1st Prize — ₹10,000 + Trophy</li><li>🥈 2nd Prize — ₹7,000 + Trophy</li><li>🥉 3rd Prize — ₹5,000 + Trophy</li><li>Entry Fee — ₹500 per Team</li>';
+        ? '<li>🏆 முதல் பரிசு — ₹15,000 + கோப்பை</li><li>🥈 இரண்டாம் பரிசு — ₹10,000 + கோப்பை</li><li>🥉 மூன்றாம் பரிசு — ₹7,000 + கோப்பை</li><li>🎖️ நான்காம் பரிசு — ₹5,000</li><li>🏅 ஐந்தாம் பரிசு — ₹3,000</li><li>💰 நுழைவு கட்டணம் — அணிக்கு ₹500</li>'
+        : '<li>🏆 1st Prize — ₹15,000 + Trophy</li><li>🥈 2nd Prize — ₹10,000 + Trophy</li><li>🥉 3rd Prize — ₹7,000 + Trophy</li><li>🎖️ 4th Prize — ₹5,000</li><li>🏅 5th Prize — ₹3,000</li><li>💰 Entry Fee — ₹500 per Team</li>';
+
+        // Rules — properly formatted <li> tags
+    document.getElementById('rulesList').innerHTML = tamil
+      ? '<li>நடுவரின் தீர்ப்பு இறுதியானது.</li>' +
+        '<li>ஒரு அணியில் ஆடிய வீரர் மற்றொரு அணியில் விளையாட அனுமதி இல்லை.</li>' +
+        '<li>போட்டிகளை மாற்றி அமைக்கும் உரிமை விழா குழுவினருக்கு உண்டு.</li>' +
+        '<li>முதல் சுற்றுகள் மட்டும் “Best of 3” அடிப்படையில் நடைபெறும்.</li>' +
+        '<li>தயவுசெய்து மதுபானம் அருந்தி மைதானத்தில் இறங்க வேண்டாம்.</li>' +
+        '<li>இந்த போட்டி இரவு மற்றும் பகல் நேரங்களில் நடைபெறும்.</li>' +
+        '<li>அடையாள அட்டை (Aadhaar ID Card) பார்த்த பிறகே விளையாட அனுமதிக்கப்படும்.</li>' +
+        '<li>போதைய பொருள் பயன்படுத்திய அணியினர் ஆட்டத்திலிருந்து நீக்கப்படுவார்கள்.</li>'
+      : '<li>The referee\'s decision is final.</li>' +
+        '<li>A player who plays for one team cannot play for another team.</li>' +
+        '<li>The organizing committee reserves the right to modify the match schedule.</li>' +
+        '<li>Only the first rounds will be conducted on a “Best of 3” basis.</li>' +
+        '<li>Players under the influence of alcohol are not allowed to enter the ground.</li>' +
+        '<li>The tournament will be conducted during both day and night.</li>' +
+        '<li>Players are allowed to play only after verifying Aadhaar ID cards.</li>' +
+        '<li>Teams or players found using drugs or banned substances will be disqualified.</li>';
     }
   </script>
 </body>
